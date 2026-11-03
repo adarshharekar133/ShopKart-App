@@ -1,7 +1,16 @@
 
+import React from "react";
 import "./Navbar.css";
+import { Link, NavLink } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ userName, cart = [] }) {
+
+  // Calculate total cart quantity
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <>
       {/* Top Shipping Bar */}
@@ -17,46 +26,10 @@ function Navbar() {
         <div className="container-fluid">
 
           {/* Logo */}
-         <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/">
             <i className="bi bi-bag-heart-fill logo-icon"></i>
-
-            <span className="logo-text">ShopKart</span> 
-          </a>
-
-          {/* Categories */}
-          <div className="dropdown category-dropdown">
-            <button
-              className="category-btn dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              All Categories
-            </button>
-
-            <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="#">Electronics</a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">Fashion</a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">Home & Kitchen</a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Beauty & Personal Care
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">Sports & Fitness</a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">Books & Stationery</a>
-              </li>
-            </ul>
-          </div>
+            <span className="logo-text">ShopKart</span>
+          </Link>
 
           {/* Mobile Toggle */}
           <button
@@ -64,72 +37,170 @@ function Navbar() {
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#shopKartNavbar"
+            aria-controls="shopKartNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          {/* Navigation */}
-          <div className="collapse navbar-collapse" id="shopKartNavbar">
+          {/* Navigation Content */}
+          <div
+            className="collapse navbar-collapse"
+            id="shopKartNavbar"
+          >
 
+            {/* Navigation Links */}
             <ul className="navbar-nav main-nav">
 
               <li className="nav-item">
-                <a className="nav-link active" href="/">
+                <NavLink
+                  className="nav-link"
+                  to="/"
+                  end
+                >
                   Home
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="/products">
+                <NavLink
+                  className="nav-link"
+                  to="/products"
+                >
                   Products
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <NavLink
+                  className="nav-link"
+                  to="/products"
+                >
                   Deals
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <NavLink
+                  className="nav-link"
+                  to="/about"
+                >
                   About Us
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <NavLink
+                  className="nav-link"
+                  to="/contact"
+                >
                   Contact
-                </a>
+                </NavLink>
               </li>
 
             </ul>
 
-            {/* Search */}
-            <div className="search-box">
+            {/* Search Box */}
+            <form
+              className="search-box"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <input
                 type="text"
                 placeholder="Search for products..."
+                aria-label="Search products"
               />
 
-              <button className="search-btn">
+              <button
+                type="submit"
+                className="search-btn"
+                aria-label="Search"
+              >
                 <i className="bi bi-search"></i>
               </button>
-            </div>
+            </form>
 
-            {/* Icons */}
+            {/* Right Side Actions */}
             <div className="nav-actions">
 
-            <div className="nav-actions">
-               <i className="bi bi-heart nav-icon"></i>
-              
-               <div className="cart-wrapper">
-               <i className="bi bi-cart3 nav-icon"></i>
-               <span className="cart-count">3</span>
-            </div>
+              {/* Account Dropdown */}
+              <div className="dropdown account-dropdown">
 
-                <span className="cart-count">3</span>
+                <button
+                  className="account-btn"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  aria-label="My Account"
+                >
+                  <i className="bi bi-person-circle profile-icon"></i>
+
+                  {userName && (
+                    <span className="account-name">
+                      {userName}
+                    </span>
+                  )}
+                </button>
+
+                <ul className="dropdown-menu dropdown-menu-end account-menu">
+
+                  {userName ? (
+                    <>
+                      <li>
+                        <span className="dropdown-item-text">
+                          Hello, {userName}!
+                        </span>
+                      </li>
+
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/"
+                        >
+                          Home
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/login"
+                        >
+                          <i className="bi bi-box-arrow-in-right"></i>
+                          Login
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to="/register"
+                        >
+                          <i className="bi bi-person-plus"></i>
+                          Register
+                        </Link>
+                      </li>
+                    </>
+                  )}
+
+                </ul>
               </div>
+
+              {/* Cart */}
+              <Link
+                to="/cart"
+                className="cart-wrapper"
+                aria-label={`Shopping cart with ${cartCount} items`}
+              >
+                <i className="bi bi-cart3 nav-icon"></i>
+
+                <span className="cart-count">
+                  {cartCount}
+                </span>
+              </Link>
 
             </div>
 

@@ -1,0 +1,246 @@
+
+/* ==============================
+   SHOPKART LOGIN PAGE
+================================ */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f0fdfa, #f8fafc, #e6fffb);
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 440px;
+  padding: 38px 35px;
+  background: #ffffff;
+  border: 1px solid #e8eeee;
+  border-radius: 20px;
+  box-shadow: 0 15px 45px rgba(0, 80, 75, 0.10);
+  box-sizing: border-box;
+  animation: loginFadeIn 0.5s ease;
+}
+
+/* Logo */
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.login-logo img {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+}
+
+/* Heading */
+
+.login-container h2 {
+  margin: 0 0 10px;
+  text-align: center;
+  color: #172033;
+  font-size: 30px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+}
+
+.login-subtitle {
+  margin: 0 0 30px;
+  color: #707985;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Form */
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.form-group label {
+  color: #263238;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  height: 48px;
+  padding: 0 15px;
+  border: 1px solid #dce4e5;
+  border-radius: 10px;
+  outline: none;
+  background: #fbfdfd;
+  color: #172033;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.form-group input::placeholder {
+  color: #a0a9b2;
+}
+
+.form-group input:hover {
+  border-color: #9bdcd5;
+}
+
+.form-group input:focus {
+  border-color: #00b3a4;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 179, 164, 0.11);
+}
+
+/* Validation Error */
+
+.form-error {
+  margin: 0;
+  color: #dc3545;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Login Button */
+
+.login-container form button {
+  width: 100%;
+  min-height: 49px;
+  margin-top: 3px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #00b3a4, #009688);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 179, 164, 0.20);
+  transition: all 0.25s ease;
+}
+
+.login-container form button:hover {
+  background: linear-gradient(135deg, #009688, #007f73);
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(0, 179, 164, 0.27);
+}
+
+.login-container form button:active {
+  transform: translateY(0);
+}
+
+/* Register Link */
+
+.register-text {
+  margin: 25px 0 0;
+  color: #707985;
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-text a {
+  color: #009f93;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.register-text a:hover {
+  color: #006f66;
+  text-decoration: underline;
+}
+
+/* Entrance Animation */
+
+@keyframes loginFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   TABLET
+================================ */
+
+@media screen and (max-width: 768px) {
+  .login-page {
+    padding: 30px 18px;
+  }
+
+  .login-container {
+    max-width: 420px;
+    padding: 32px 28px;
+  }
+
+  .login-container h2 {
+    font-size: 27px;
+  }
+}
+
+/* ==============================
+   MOBILE
+================================ */
+
+@media screen and (max-width: 480px) {
+  .login-page {
+    min-height: 100vh;
+    padding: 22px 14px;
+  }
+
+  .login-container {
+    padding: 28px 21px;
+    border-radius: 16px;
+  }
+
+  .login-logo img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .login-container h2 {
+    font-size: 25px;
+  }
+
+  .login-subtitle {
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .login-container form {
+    gap: 17px;
+  }
+
+  .form-group input {
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .login-container form button {
+    min-height: 47px;
+  }
+
+  .register-text {
+    font-size: 13px;
+  }
+}

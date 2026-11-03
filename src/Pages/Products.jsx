@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./Products.css";
 
@@ -125,6 +126,8 @@ export const products = [
 ===================================================== */
 
 function Products() {
+
+  const { cartItems, dispatch } = useOutletContext();
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [maxPrice, setMaxPrice] = useState(20000);
@@ -441,9 +444,20 @@ function Products() {
             <del>₹{product.originalPrice}</del>
           </div>
 
-          <button className="add-cart-button" type="button">
-            🛒 Add to Cart
-          </button>
+          
+          <button
+           className="add-cart-button"
+           type="button"
+           onClick={() =>
+              dispatch({
+                type: "ADD_ITEM",
+                payload: product
+             })
+          }
+>
+  🛒 Add to Cart
+</button>
+
 
         </div>
 
