@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import "./Products.css";
 
@@ -18,8 +18,7 @@ export const products = [
     reviews: 1850,
     discount: "17%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=800&q=90",
   },
   {
     id: 2,
@@ -31,8 +30,7 @@ export const products = [
     reviews: 1200,
     discount: "47%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=90",
   },
   {
     id: 3,
@@ -44,8 +42,7 @@ export const products = [
     reviews: 980,
     discount: "48%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=90",
   },
   {
     id: 4,
@@ -57,8 +54,7 @@ export const products = [
     reviews: 2300,
     discount: "40%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=90",
   },
   {
     id: 5,
@@ -70,8 +66,7 @@ export const products = [
     reviews: 890,
     discount: "40%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=90",
   },
   {
     id: 6,
@@ -83,8 +78,7 @@ export const products = [
     reviews: 3400,
     discount: "48%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=800&q=90",
   },
   {
     id: 7,
@@ -96,8 +90,7 @@ export const products = [
     reviews: 760,
     discount: "40%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=800&q=90",
   },
   {
     id: 8,
@@ -109,8 +102,19 @@ export const products = [
     reviews: 540,
     discount: "40%",
     isAvailable: true,
-    image:
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=90",
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=90",
+  },
+  {
+  id: 9,
+  name: "Sony Wireless Headphones",
+  category: "Electronics",
+  price: "3,499",
+  originalPrice: "4,999",
+  rating: 4.7,
+  reviews: 1500,
+  discount: "30%",
+  isAvailable: true,
+  image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=90",
   },
 ];
 
@@ -119,8 +123,13 @@ export const products = [
 ===================================================== */
 
 function Products() {
-  const navigate = useNavigate();
+  const [sortOption, setSortOption] = useState("");
 
+  // PAGINATION STATE
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 8;
+
+  const navigate = useNavigate();
   const { dispatch } = useOutletContext();
 
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -128,6 +137,22 @@ function Products() {
   const [selectedRating, setSelectedRating] = useState(0);
   const [availability, setAvailability] = useState("");
   const [addedProductId, setAddedProductId] = useState(null);
+
+  /* =====================================================
+     RESET PAGINATION WHEN SORTING CHANGES
+  ===================================================== */
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortOption]);
+
+  /* =====================================================
+     RESET PAGINATION WHEN FILTERS CHANGE
+  ===================================================== */
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategories, maxPrice, selectedRating, availability]);
 
   /* =====================================================
      FILTER HANDLERS
@@ -191,7 +216,7 @@ function Products() {
       selectedCategories.includes(product.category);
 
     const priceMatch =
-      Number(product.price.replace(",", "")) <= maxPrice;
+      Number(product.price.replace(/,/g, "")) <= maxPrice;
 
     const ratingMatch = product.rating >= selectedRating;
 
@@ -207,6 +232,56 @@ function Products() {
       availabilityMatch
     );
   });
+
+  /* =====================================================
+     SORTING PRODUCTS
+  ===================================================== */
+
+  let sortedProducts = [...filteredProducts];
+
+  if (sortOption === "price-low") {
+    sortedProducts.sort(
+      (a, b) =>
+        Number(a.price.replace(/,/g, "")) -
+        Number(b.price.replace(/,/g, ""))
+    );
+  }
+
+  if (sortOption === "price-high") {
+    sortedProducts.sort(
+      (a, b) =>
+        Number(b.price.replace(/,/g, "")) -
+        Number(a.price.replace(/,/g, ""))
+    );
+  }
+
+  if (sortOption === "rating-high") {
+    sortedProducts.sort((a, b) => b.rating - a.rating);
+  }
+
+  if (sortOption === "rating-low") {
+    sortedProducts.sort((a, b) => a.rating - b.rating);
+  }
+
+  if (sortOption === "popular") {
+    sortedProducts.sort((a, b) => b.reviews - a.reviews);
+  }
+
+  /* =====================================================
+     PAGINATION LOGIC
+  ===================================================== */
+
+  const totalPages = Math.ceil(
+    sortedProducts.length / productsPerPage
+  );
+
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+
+  const currentProducts = sortedProducts.slice(
+    startIndex,
+    endIndex
+  );
 
   /* =====================================================
      PRODUCT NAVIGATION
@@ -354,18 +429,35 @@ function Products() {
             <p>
               Showing{" "}
               <strong>
-                {filteredProducts.length} of {products.length}
+                {sortedProducts.length} of {products.length}
               </strong>{" "}
               products
             </p>
+
+            <div className="sort-section">
+              <label htmlFor="sort">Sort By:</label>
+
+              <select
+                id="sort"
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+              >
+                <option value="">Default</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating-high">Rating: High to Low</option>
+                <option value="rating-low">Rating: Low to High</option>
+                <option value="popular">Most Popular</option>
+              </select>
+            </div>
           </div>
 
           {/* PRODUCT GRID */}
 
           <div className="products-grid">
 
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
+            {sortedProducts.length > 0 ? (
+              currentProducts.map((product) => (
 
                 <div
                   className="product-card"
@@ -413,7 +505,9 @@ function Products() {
 
                     <div className="rating">
                       ⭐ {product.rating}
-                      <span> ({product.reviews.toLocaleString("en-IN")})</span>
+                      <span>
+                        ({product.reviews.toLocaleString("en-IN")})
+                      </span>
                     </div>
 
                     <div className="product-price">
@@ -452,6 +546,48 @@ function Products() {
             )}
 
           </div>
+
+          {/* PAGINATION BUTTONS */}
+
+          {totalPages > 1 && (
+            <div className="pagination">
+
+              <button
+                onClick={() =>
+                  setCurrentPage((previous) =>
+                    Math.max(previous - 1, 1)
+                  )
+                }
+                disabled={currentPage === 1}
+              >
+                ←
+              </button>
+
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index + 1}
+                  className={
+                    currentPage === index + 1 ? "active" : ""
+                  }
+                  onClick={() => setCurrentPage(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+
+              <button
+                onClick={() =>
+                  setCurrentPage((previous) =>
+                    Math.min(previous + 1, totalPages)
+                  )
+                }
+                disabled={currentPage === totalPages}
+              >
+                →
+              </button>
+
+            </div>
+          )}
 
         </div>
 

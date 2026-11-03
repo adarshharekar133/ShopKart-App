@@ -1218,3 +1218,65 @@
 .product-details-link:hover {
   color: #08bdb3;
 }
+
+
+/* =========================================
+   PRODUCT SORTING
+========================================= */
+
+.products-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.sort-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-section label {
+  color: #082d3a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sort-section select {
+  min-width: 190px;
+  padding: 10px 35px 10px 12px;
+  border: 1px solid #dce6e8;
+  border-radius: 7px;
+  background-color: #ffffff;
+  color: #082d3a;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.sort-section select:hover,
+.sort-section select:focus {
+  border-color: #08bdb3;
+  box-shadow: 0 0 0 3px rgba(8, 189, 179, 0.10);
+}
+
+@media (max-width: 600px) {
+  .products-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sort-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-section select {
+    flex: 1;
+    min-width: 0;
+  }
+}
