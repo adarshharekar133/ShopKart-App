@@ -1209,3 +1209,12 @@
   font-size: 14px;
   color: #7b8490;
 }
+
+.product-details-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-details-link:hover {
+  color: #08bdb3;
+}

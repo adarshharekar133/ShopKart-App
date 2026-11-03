@@ -1,0 +1,147 @@
+
+/* =========================================
+   NOT FOUND PAGE - SHOPKART
+========================================= */
+
+.not-found-page {
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: #f7fbfc;
+  text-align: center;
+}
+
+.not-found-content {
+  width: 100%;
+  max-width: 650px;
+  margin: auto;
+}
+
+/* 404 Illustration */
+
+.not-found-illustration {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e2f8f6;
+  font-size: 85px;
+  box-shadow: 0 15px 35px rgba(8, 189, 179, 0.12);
+}
+
+.not-found-illustration span {
+  position: absolute;
+  right: -15px;
+  bottom: 5px;
+  padding: 10px 16px;
+  border-radius: 30px;
+  background: #08bdb3;
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  box-shadow: 0 5px 15px rgba(8, 189, 179, 0.25);
+}
+
+/* Text Content */
+
+.not-found-label {
+  color: #08bdb3;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.not-found-content h1 {
+  color: #082d3a;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.not-found-content h1 span {
+  color: #08bdb3;
+}
+
+.not-found-description {
+  max-width: 480px;
+  margin: 0 auto;
+  color: #687981;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Buttons */
+
+.not-found-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.not-found-buttons a {
+  padding: 14px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+/* Home Button */
+
+.not-found-home-btn {
+  background: #08bdb3;
+  color: white;
+  box-shadow: 0 5px 15px rgba(8, 189, 179, 0.2);
+}
+
+.not-found-home-btn:hover {
+  background: #069d95;
+  transform: translateY(-3px);
+}
+
+/* Products Button */
+
+.not-found-products-btn {
+  background: white;
+  color: #082d3a;
+  border: 1px solid #dce6e8;
+}
+
+.not-found-products-btn:hover {
+  border-color: #08bdb3;
+  color: #08a69e;
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
+
+@media (max-width: 480px) {
+  .not-found-page {
+    padding: 45px 16px;
+  }
+
+  .not-found-illustration {
+    width: 140px;
+    height: 140px;
+    font-size: 70px;
+  }
+
+  .not-found-buttons {
+    flex-direction: column;
+  }
+
+  .not-found-buttons a {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
