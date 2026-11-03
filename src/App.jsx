@@ -1,6 +1,7 @@
 
 import React, { useState, useReducer, useEffect } from "react";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 
 // Initial Cart State
@@ -10,7 +11,6 @@ const initialCartState = [];
 function cartReducer(state, action) {
   switch (action.type) {
 
-    // Add Product to Cart
     case "ADD_ITEM": {
       const existingItem = state.find(
         (item) => item.id === action.payload.id
@@ -30,7 +30,6 @@ function cartReducer(state, action) {
       ];
     }
 
-    // Increase Quantity
     case "INCREASE_QUANTITY":
       return state.map((item) =>
         item.id === action.payload
@@ -38,7 +37,6 @@ function cartReducer(state, action) {
           : item
       );
 
-    // Decrease Quantity
     case "DECREASE_QUANTITY":
       return state
         .map((item) =>
@@ -48,21 +46,17 @@ function cartReducer(state, action) {
         )
         .filter((item) => item.quantity > 0);
 
-    // Remove Product
     case "REMOVE_ITEM":
       return state.filter(
         (item) => item.id !== action.payload
       );
 
-    // Clear Entire Cart
     case "CLEAR_CART":
       return [];
 
-    // Load Cart
     case "LOAD_CART":
       return action.payload;
 
-    // Default
     default:
       return state;
   }
@@ -80,7 +74,7 @@ function App() {
     initialCartState
   );
 
-  // Cart Loaded State
+  // Cart Loading State
   const [cartLoaded, setCartLoaded] = useState(false);
 
   // Restore Cart from LocalStorage
@@ -107,27 +101,23 @@ function App() {
 
   // Save Cart to LocalStorage
   useEffect(() => {
-
-    if (!cartLoaded) {
-      return;
-    }
+    if (!cartLoaded) return;
 
     localStorage.setItem(
       "cart",
       JSON.stringify(cartItems)
     );
-
   }, [cartItems, cartLoaded]);
 
   return (
     <>
-      {/* Navbar */}
+      {/* Global Navbar */}
       <Navbar
         userName={userName}
         cart={cartItems}
       />
 
-      {/* Page Content */}
+      {/* All Pages */}
       <Outlet
         context={{
           userName,
@@ -136,6 +126,9 @@ function App() {
           dispatch
         }}
       />
+
+      {/* Global Footer */}
+      <Footer />
     </>
   );
 }
